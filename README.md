@@ -1,6 +1,13 @@
-# A-_Pathfinding_with_grid
-Contains all scripts required to build a basic A* pathfinding algorithm. Non-optimized.
-Works by checking all neighbouring nodes including diagonals.
+<h1 align="center">README</h1>
+<p align="center"><i>A* Pathfinding with grid </i></p>
+<p align="center"><i>Contains all scripts required to build a basic A* pathfinding algorithm. Non-optimized.
+Works by checking all neighbouring nodes including diagonals.</i></p>
+<div align="center">
+</div>
+<br>
+<br>
+
+
 
 How to use :
 - Create an empty gameObject for the grid and assign it the grid script
@@ -10,4 +17,14 @@ How to use :
 
 
 To do : 
-- Add selector to chose 4 neighbouring nodes (Up/Down/Left/Right) Or 8 neighbouring nodes (With diagonals)
+- Add selector to chose 4 neighbouring nodes (Up/Down/Left/Right) Or 8 neighbouring nodes (With diagonals) 
+
+
+
+# Contribute
+
+TBD
+
+## :man_astronaut: Show your support
+
+Give a ⭐️ if this project helped you!
