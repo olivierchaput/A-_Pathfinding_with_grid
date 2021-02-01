@@ -4,7 +4,9 @@ Works by checking all neighbouring nodes including diagonals.
 
 How to use :
 - Create an empty gameObject for the grid and assign it the grid script
+  - Enter grid dimensions, cell-size, start position, obstacle mask and distance between cells
 - Create an empty gameobject for the pathfinding and assign it pathfinding script
+  - Add reference to grid script, start position, end position
 
 
 To do : 
