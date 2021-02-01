@@ -1,5 +1,4 @@
-<h1 align="center">README</h1>
-<p align="center"><i>A* Pathfinding with grid </i></p>
+<h1 align="Left">README - A* Pathfinding with grid </h1>
 <p align="center"><i>Contains all scripts required to build a basic A* pathfinding algorithm. Non-optimized.
 Works by checking all neighbouring nodes including diagonals.</i></p>
 <div align="center">
