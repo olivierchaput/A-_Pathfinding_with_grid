@@ -8,6 +8,8 @@ public class Pathfinding : MonoBehaviour
     public Transform StartPosition = null;
     public Transform EndPosition = null;
 
+    LineRenderer lineRenderer;
+
     /*
     private void Awake()
     {
@@ -15,12 +17,15 @@ public class Pathfinding : MonoBehaviour
     }
     */
 
-    private void Update()
+    private void Start()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            FindPath(StartPosition.position, EndPosition.position);
-        }
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    public void GeneratePath()
+    {
+        grid.CreateGrid();
+        FindPath(StartPosition.position, EndPosition.position);
     }
 
     void FindPath(Vector3 _startPos, Vector3 _endPos)
@@ -30,6 +35,8 @@ public class Pathfinding : MonoBehaviour
 
         List<Node> OpenList = new List<Node>();
         HashSet<Node> ClosedList = new HashSet<Node>();
+
+        bool finalPathFound = false;
 
         OpenList.Add(startNode);
         
@@ -49,9 +56,13 @@ public class Pathfinding : MonoBehaviour
                 OpenList.Remove(currentNode);
                 ClosedList.Add(currentNode);
 
+                //Debug.Log("Close list count : " + ClosedList.Count);
+                //Debug.Log("Open list count : " + OpenList.Count);
+
                 if(currentNode == endNode)
                 {
                     GetFinalPath(startNode, endNode);
+                    finalPathFound = true;
                 }
 
                 foreach(Node neighbourNode in grid.GetNeighbouringNodes(currentNode))
@@ -75,24 +86,32 @@ public class Pathfinding : MonoBehaviour
                     }
                 }
         }
+        if(!finalPathFound)
+        {
+            Debug.Log("BLOCKED");
+        }
     }
 
     void GetFinalPath(Node _StartNode, Node _EndNode)
     {
+        List<Vector3> FinalPathPointsToDraw = new List<Vector3>();
         List<Node> FinalPath = new List<Node>();
         Node currentNode = _EndNode;
 
         while(currentNode != _StartNode)
         {
-            Debug.Log(currentNode.worldPosition);
             FinalPath.Add(currentNode);
+            FinalPathPointsToDraw.Add(currentNode.worldPosition + Vector3.up * 0.02f);
             currentNode = currentNode.Parent;
         }
-        Debug.Log(FinalPath.Count);
         FinalPath.Reverse();
 
         grid.FinalPath = FinalPath;
-
+        lineRenderer.positionCount = FinalPathPointsToDraw.Count;
+        for (int i = 0; i < lineRenderer.positionCount; i++)
+        {
+            lineRenderer.SetPosition(i, FinalPathPointsToDraw[i]);
+        }
     }
 
     private int GetManhattanDistance(Node _currentNode, Node _neighbourNode)

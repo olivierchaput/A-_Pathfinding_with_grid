@@ -12,6 +12,9 @@ public class GridCustom : MonoBehaviour
     public float nodeRadius;
     public float distanceFromNextNode;
 
+    public enum NeighbourType{EightDiagonal, FourCross};
+    public NeighbourType neighbour;
+
     Node[,] grid;
     public List<Node> FinalPath;
 
@@ -27,7 +30,7 @@ public class GridCustom : MonoBehaviour
         CreateGrid();
     }
 
-    private void CreateGrid()
+    public void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];
         Vector3 bottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
@@ -69,26 +72,75 @@ public class GridCustom : MonoBehaviour
 
         List<Node> NeighbouringNodes = new List<Node>();
 
-        for(int x = -1; x <= 1; x++) 
+        if(neighbour == NeighbourType.EightDiagonal)
         {
-            for (int y = -1; y <= 1; y++) 
+            for(int x = -1; x <= 1; x++) 
             {
-                //if we are on the node tha was passed in, skip this iteration.
-                if(x == 0 && y == 0) 
+                for (int y = -1; y <= 1; y++) 
                 {
-                    continue;
-                }
+                    //if we are on the node that was passed in, skip this iteration.
+                    if(x == 0 && y == 0) 
+                    {
+                        continue;
+                    }
 
-                int checkX = _Node.gridX + x;
-                int checkY = _Node.gridY + y;
+                    int checkX = _Node.gridX + x;
+                    int checkY = _Node.gridY + y;
 
-                //Make sure the node is within the grid.
-                if(checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY) 
-                {
-                    NeighbouringNodes.Add(grid[checkX, checkY]); //Adds to the neighbours list.
+                    //Make sure the node is within the grid.
+                    if(checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY) 
+                    {
+                        NeighbouringNodes.Add(grid[checkX, checkY]); //Adds to the neighbours list.
+                    }
                 }
             }
         }
+        else if(neighbour == NeighbourType.FourCross)
+        {
+            int xCheck;
+            int yCheck;
+            //Right side
+            xCheck = _Node.gridX + 1;
+            yCheck = _Node.gridY;
+            if (xCheck >= 0 && xCheck < gridSizeX)
+            {
+                if (yCheck >= 0 && yCheck < gridSizeY)
+                {
+                    NeighbouringNodes.Add(grid[xCheck, yCheck]);
+                }
+            }
+            //Left Side
+            xCheck = _Node.gridX - 1;
+            yCheck = _Node.gridY;
+            if (xCheck >= 0 && xCheck < gridSizeX)
+            {
+                if (yCheck >= 0 && yCheck < gridSizeY)
+                {
+                    NeighbouringNodes.Add(grid[xCheck, yCheck]);
+                }
+            }
+            //Top Side
+            xCheck = _Node.gridX;
+            yCheck = _Node.gridY + 1;
+            if (xCheck >= 0 && xCheck < gridSizeX)
+            {
+                if (yCheck >= 0 && yCheck < gridSizeY)
+                {
+                    NeighbouringNodes.Add(grid[xCheck, yCheck]);
+                }
+            }
+            //Bottom Side
+            xCheck = _Node.gridX;
+            yCheck = _Node.gridY - 1;
+            if (xCheck >= 0 && xCheck < gridSizeX)
+            {
+                if (yCheck >= 0 && yCheck < gridSizeY)
+                {
+                    NeighbouringNodes.Add(grid[xCheck, yCheck]);
+                }
+            }
+        }
+
 
         return NeighbouringNodes;
     } 
