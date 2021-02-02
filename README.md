@@ -16,7 +16,12 @@ How to use :
 
 
 To do : 
-- Add selector to chose 4 neighbouring nodes (Up/Down/Left/Right) Or 8 neighbouring nodes (With diagonals) 
+- Add selector to enable or disable gizmos
+- Code optimisations
+  - Reduce number of lines for the 4 neighbour checking
+  - Modify grid without having to generate a new one each time an object is placed
+- Add simple function to call to redraw grid and to refind best path
+
 
 
 
